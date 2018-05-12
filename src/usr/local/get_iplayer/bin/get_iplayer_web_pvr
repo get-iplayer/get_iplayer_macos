@@ -1,0 +1,15 @@
+#!/bin/bash
+GIPDIR=/usr/local/get_iplayer
+GIPCLI=$GIPDIR/bin/get_iplayer
+GIPWPM=$GIPDIR/bin/get_iplayer.cgi
+LISTEN=${LISTEN:-127.0.0.1}
+PORT=${PORT:-1935}
+BASEURL=${BASEURL:+-b ${BASEURL}}
+echo "Starting Web PVR Manager (Ctrl-C to stop)..."
+/usr/bin/screen -d -m /usr/bin/perl $GIPWPM -g $GIPCLI -l $LISTEN -p $PORT $BASEURL
+echo "Waiting for Web PVR Manager to start..."
+sleep 5
+echo "Opening Web PVR Manager..."
+open "http://$LISTEN:$PORT"
+echo "Showing Web PVR Manager output..."
+/usr/bin/screen -r
