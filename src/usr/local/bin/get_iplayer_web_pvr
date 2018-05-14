@@ -1,3 +1,0 @@
-#!/bin/bash
-GIPDIR="/usr/local/get_iplayer"
-PATH="$GIPDIR/bin${PATH:+:${PATH}}" PERL5LIB="$GIPDIR/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}" exec "$GIPDIR/bin/get_iplayer_web_pvr" "$@"
