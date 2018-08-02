@@ -1,5 +1,5 @@
 #!/bin/bash
-url_rgx='^https?://www.bbc.co.uk/(programmes|(iplayer/((cbbc|cbeebies)/)?episode))/([b-df-hj-np-tv-z0-9]{8,})(/|$)'
+url_rgx='^https?://(www\.)?bbc\.co\.uk/.*/([b-df-hj-np-tv-z0-9]{8,})([/?#]|$)'
 urls=()
 if [[ $# -gt 0 ]]
 then
@@ -48,7 +48,7 @@ fi
 for url in "${urls[@]}"
 do
 	[[ $url =~ $url_rgx ]]
-	pid=${BASH_REMATCH[5]}
+	pid=${BASH_REMATCH[2]}
 	if [[ $url =~ /ad/ ]]
 	then
 		pids_ad=${pids_ad:+${pids_ad},}$pid

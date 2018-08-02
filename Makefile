@@ -42,7 +42,7 @@ atomicparsley_zip := AtomicParsley-0.9.6-macos-bin.zip
 atomicparsley_zip_url := https://bitbucket.org/dinkypumpkin/atomicparsley/downloads/$(atomicparsley_zip)
 build_atomicparsley := $(build)
 build_atomicparsley_zip := $(build_atomicparsley)/$(atomicparsley_zip)
-ffmpeg_7z := ffmpeg-4.0.1.7z
+ffmpeg_7z := ffmpeg-4.0.2.7z
 ffmpeg_7z_url := https://evermeet.cx/pub/ffmpeg/$(ffmpeg_7z)
 build_ffmpeg := $(build)
 build_ffmpeg_7z := $(build_ffmpeg)/$(ffmpeg_7z)
@@ -62,7 +62,7 @@ io-socket-ssl_tgz := IO-Socket-SSL-2.056.tar.gz
 io-socket-ssl_tgz_url := https://cpan.metacpan.org/authors/id/S/SU/SULLR/$(io-socket-ssl_tgz)
 io-socket-ip_tgz := IO-Socket-IP-0.39.tar.gz
 io-socket-ip_tgz_url := https://cpan.metacpan.org/authors/id/P/PE/PEVANS/$(io-socket-ip_tgz)
-mojolicious_tgz := Mojolicious-7.85.tar.gz
+mojolicious_tgz := Mojolicious-7.92.tar.gz
 mojolicious_tgz_url := https://cpan.metacpan.org/authors/id/S/SR/SRI/$(mojolicious_tgz)
 def_ver := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" "$(pkg_src)")
 def_name := $(shell /usr/libexec/PlistBuddy -c "Print :PROJECT:PROJECT_SETTINGS:NAME" "$(pkg_src)")
@@ -287,7 +287,10 @@ commit:
 ifndef WIP
 	@git commit -m "$(pkg_ver)" "$(pkg_src)"
 	@git tag $(pkg_ver)
+	@git checkout contribute
+	@git merge master
 	@git revert --no-edit HEAD
+	@git checkout master
 	@echo tagged $(pkg_ver)
 else
 	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(def_ver)" "$(pkg_src)"
@@ -295,7 +298,8 @@ else
 endif
 
 clean:
-	@rm -fr "$(build_pkg)"/$(pkg_file)*
+	@rm -f "$(build_pkg)"/$(pkg_file)
+	@rm -f "$(build_pkg)"/$(pkg_file).{md5,sha1}
 	@echo removed $(build_pkg)/$(pkg_file)
 	@rm -fr "$(build_payload)"
 	@echo removed $(build_payload)
