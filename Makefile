@@ -39,10 +39,10 @@ build_gip := $(build)
 build_gip_zip := $(build_gip)/$(gip_zip)
 build_perl5 := $(build)/perl5
 atomicparsley_zip := AtomicParsley-0.9.6-macos-bin.zip
-atomicparsley_zip_url := https://bitbucket.org/dinkypumpkin/atomicparsley/downloads/$(atomicparsley_zip)
+atomicparsley_zip_url := https://sourceforge.net/projects/get-iplayer/files/utils/$(atomicparsley_zip)
 build_atomicparsley := $(build)
 build_atomicparsley_zip := $(build_atomicparsley)/$(atomicparsley_zip)
-ffmpeg_7z := ffmpeg-4.0.2.7z
+ffmpeg_7z := ffmpeg-4.1.7z
 ffmpeg_7z_url := https://evermeet.cx/pub/ffmpeg/$(ffmpeg_7z)
 build_ffmpeg := $(build)
 build_ffmpeg_7z := $(build_ffmpeg)/$(ffmpeg_7z)
@@ -58,15 +58,16 @@ apps := $(build_payload)/Applications
 apps_gip := $(apps)/get_iplayer
 mozilla-ca_tgz := Mozilla-CA-20180117.tar.gz
 mozilla-ca_tgz_url := https://cpan.metacpan.org/authors/id/A/AB/ABH/$(mozilla-ca_tgz)
-io-socket-ssl_tgz := IO-Socket-SSL-2.056.tar.gz
+io-socket-ssl_tgz := IO-Socket-SSL-2.060.tar.gz
 io-socket-ssl_tgz_url := https://cpan.metacpan.org/authors/id/S/SU/SULLR/$(io-socket-ssl_tgz)
 io-socket-ip_tgz := IO-Socket-IP-0.39.tar.gz
 io-socket-ip_tgz_url := https://cpan.metacpan.org/authors/id/P/PE/PEVANS/$(io-socket-ip_tgz)
-mojolicious_tgz := Mojolicious-7.92.tar.gz
+mojolicious_tgz := Mojolicious-8.02.tar.gz
 mojolicious_tgz_url := https://cpan.metacpan.org/authors/id/S/SR/SRI/$(mojolicious_tgz)
-def_ver := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" "$(pkg_src)")
-def_name := $(shell /usr/libexec/PlistBuddy -c "Print :PROJECT:PROJECT_SETTINGS:NAME" "$(pkg_src)")
+curr_version := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" "$(pkg_src)")
+curr_name := $(shell /usr/libexec/PlistBuddy -c "Print :PROJECT:PROJECT_SETTINGS:NAME" "$(pkg_src)")
 ditto := ditto --norsrc --noextattr --noacl
+next_ver := $(VERSION).$(shell expr $(PATCH) + 1)
 
 dummy:
 	@echo Nothing to make
@@ -74,7 +75,7 @@ dummy:
 $(ul_bin):
 ifndef NOGIP
 	@mkdir -p "$(ul_bin)"
-	@$(ditto) get_iplayer get_iplayer_pvr get_iplayer_uninstall get_iplayer_web_pvr "$(ul_bin)"
+	@$(ditto) get_iplayer get_iplayer.cgi get_iplayer_pvr get_iplayer_uninstall get_iplayer_web_pvr "$(ul_bin)"
 	@echo created $(ul_bin)
 endif
 
@@ -237,10 +238,10 @@ licenses: $(ulg_licenses)
 $(apps_gip):
 ifndef NOAPPS
 	@mkdir -p "$(apps_gip)"
-	@$(ditto) {get_iplayer,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command "$(apps_gip)"
-	@SetFile -a E "$(apps_gip)"/{get_iplayer,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command
+	@$(ditto) {get_iplayer,get_iplayer.cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command "$(apps_gip)"
+	@SetFile -a E "$(apps_gip)"/{get_iplayer,get_iplayer.cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command
 	@seticon get_iplayer.icns "$(apps_gip)"/get_iplayer.command
-	@seticon get_iplayer_pvr.icns "$(apps_gip)"/{"Run PVR Scheduler","Web PVR Manager"}.command
+	@seticon get_iplayer_pvr.icns "$(apps_gip)"/{get_iplayer.cgi,"Run PVR Scheduler","Web PVR Manager"}.command
 	@seticon get_iplayer_uninstall.icns "$(apps_gip)"/"Uninstall get_iplayer".command
 	@mkdir -p "$(apps_gip)"/Help
 	@$(ditto) {get_iplayer,AtomicParsley,FFmpeg,Perl}" Documentation".webloc "$(apps_gip)"/Help
@@ -289,12 +290,14 @@ ifndef WIP
 	@git tag $(pkg_ver)
 	@git checkout contribute
 	@git merge master
-	@git revert --no-edit HEAD
+	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(next_ver)" "$(pkg_src)"
+	@/usr/libexec/PlistBuddy -c "Set :PROJECT:PROJECT_SETTINGS:NAME $(pkg_name)-$(next_ver)" "$(pkg_src)"
+	@git commit -m "bump dev version" "$(pkg_src)"
 	@git checkout master
 	@echo tagged $(pkg_ver)
 else
-	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(def_ver)" "$(pkg_src)"
-	@/usr/libexec/PlistBuddy -c "Set :PROJECT:PROJECT_SETTINGS:NAME $(def_name)" "$(pkg_src)"
+	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(curr_version)" "$(pkg_src)"
+	@/usr/libexec/PlistBuddy -c "Set :PROJECT:PROJECT_SETTINGS:NAME $(curr_name)" "$(pkg_src)"
 endif
 
 clean:
@@ -313,7 +316,6 @@ release: clean checkout deps pkg commit
 
 install:
 	@sudo installer -pkg "$(build_pkg)"/$(pkg_file) -target /
-	@echo installed
 
 uninstall:
 	@/usr/local/bin/get_iplayer_uninstall
