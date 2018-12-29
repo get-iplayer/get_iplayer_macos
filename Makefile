@@ -67,7 +67,6 @@ mojolicious_tgz_url := https://cpan.metacpan.org/authors/id/S/SR/SRI/$(mojolicio
 curr_version := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" "$(pkg_src)")
 curr_name := $(shell /usr/libexec/PlistBuddy -c "Print :PROJECT:PROJECT_SETTINGS:NAME" "$(pkg_src)")
 ditto := ditto --norsrc --noextattr --noacl
-next_ver := $(VERSION).$(shell expr $(PATCH) + 1)
 
 dummy:
 	@echo Nothing to make
@@ -150,6 +149,7 @@ ifndef NOPERL
 	cpanm -n -l "$(ulg_perl5)" "$(build_perl5)"/$(io-socket-ssl_tgz) || exit 5; \
 	cpanm -n -l "$(ulg_perl5)" "$(build_perl5)"/$(io-socket-ip_tgz) || exit 5; \
 	cpanm -n -l "$(ulg_perl5)" "$(build_perl5)"/$(mojolicious_tgz) || exit 5
+	@rm -fr "$(ulg_perl5)"/lib/perl5/darwin-thread-multi-2level
 	@echo created $(ulg_perl5)
 endif
 
@@ -290,9 +290,9 @@ ifndef WIP
 	@git tag $(pkg_ver)
 	@git checkout contribute
 	@git merge master
-	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(next_ver)" "$(pkg_src)"
-	@/usr/libexec/PlistBuddy -c "Set :PROJECT:PROJECT_SETTINGS:NAME $(pkg_name)-$(next_ver)" "$(pkg_src)"
-	@git commit -m "bump dev version" "$(pkg_src)"
+	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(curr_version)" "$(pkg_src)"
+	@/usr/libexec/PlistBuddy -c "Set :PROJECT:PROJECT_SETTINGS:NAME $(curr_name)" "$(pkg_src)"
+	@git commit -m "revert dev version" "$(pkg_src)"
 	@git checkout master
 	@echo tagged $(pkg_ver)
 else
