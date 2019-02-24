@@ -149,7 +149,8 @@ ifndef NOPERL
 	cpanm -n -l "$(ulg_perl5)" "$(build_perl5)"/$(io-socket-ssl_tgz) || exit 5; \
 	cpanm -n -l "$(ulg_perl5)" "$(build_perl5)"/$(io-socket-ip_tgz) || exit 5; \
 	cpanm -n -l "$(ulg_perl5)" "$(build_perl5)"/$(mojolicious_tgz) || exit 5
-	@rm -fr "$(ulg_perl5)"/lib/perl5/darwin-thread-multi-2level
+	@rm -f "$(ulg_perl5)"/lib/perl5/darwin-thread-multi-2level/perllocal.pod
+	@find "$(ulg_perl5)"/lib/perl5/darwin-thread-multi-2level/auto -type f -name .packlist -exec rm -f {} \;
 	@echo created $(ulg_perl5)
 endif
 
@@ -272,6 +273,7 @@ ifndef NOPKG
 	@pushd "$(build_pkg)"; \
 		md5 -r $(pkg_file) > $(pkg_file).md5 || exit 6; \
 		shasum -a 1 $(pkg_file) > $(pkg_file).sha1 || exit 6; \
+		shasum -a 256 $(pkg_file) > $(pkg_file).sha256 || exit 6; \
 	popd
 	@echo built $(build_pkg)/$(pkg_file)
 endif
