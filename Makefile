@@ -101,6 +101,7 @@ ifndef NOGIP
 	@sed -E -i.bak -e 's/^(my (\$$version_text|\$$VERSION_TEXT)).*/\1 = "$(pkg_ver)-$$^O";/' \
 		"$(ulg_bin)"/{get_iplayer,get_iplayer.cgi}
 	@rm -f "$(ulg_bin)"/{get_iplayer,get_iplayer.cgi}.bak
+	@mv -f "$(ulg_bin)"/get_iplayer "$(ulg_bin)"/get_iplayer.pl
 	@echo created $(ulg_bin)
 endif
 
