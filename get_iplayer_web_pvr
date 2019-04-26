@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Starting Web PVR Manager server..."
-/usr/bin/screen -d -m /usr/local/bin/get_iplayer.cgi
+/usr/bin/screen -d -m /usr/local/bin/get_iplayer_cgi
 echo "Opening Web PVR Manager client..."
 sleep 5
 open http://127.0.0.1:1935

@@ -20,6 +20,7 @@ items="
 	${dstpath}usr/local/share/man/man1/get_iplayer.1
 	${dstpath}usr/local/bin/get_iplayer
 	${dstpath}usr/local/bin/get_iplayer.cgi
+	${dstpath}usr/local/bin/get_iplayer_cgi
 	${dstpath}usr/local/bin/get_iplayer_pvr
 	${dstpath}usr/local/bin/get_iplayer_web_pvr
 "

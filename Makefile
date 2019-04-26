@@ -74,7 +74,7 @@ dummy:
 $(ul_bin):
 ifndef NOGIP
 	@mkdir -p "$(ul_bin)"
-	@$(ditto) get_iplayer get_iplayer.cgi get_iplayer_pvr get_iplayer_uninstall get_iplayer_web_pvr "$(ul_bin)"
+	@$(ditto) get_iplayer get_iplayer_cgi get_iplayer_pvr get_iplayer_uninstall get_iplayer_web_pvr "$(ul_bin)"
 	@echo created $(ul_bin)
 endif
 
@@ -239,10 +239,10 @@ licenses: $(ulg_licenses)
 $(apps_gip):
 ifndef NOAPPS
 	@mkdir -p "$(apps_gip)"
-	@$(ditto) {get_iplayer,get_iplayer.cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command "$(apps_gip)"
-	@SetFile -a E "$(apps_gip)"/{get_iplayer,get_iplayer.cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command
+	@$(ditto) {get_iplayer,get_iplayer_cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command "$(apps_gip)"
+	@SetFile -a E "$(apps_gip)"/{get_iplayer,get_iplayer_cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command
 	@seticon get_iplayer.icns "$(apps_gip)"/get_iplayer.command
-	@seticon get_iplayer_pvr.icns "$(apps_gip)"/{get_iplayer.cgi,"Run PVR Scheduler","Web PVR Manager"}.command
+	@seticon get_iplayer_pvr.icns "$(apps_gip)"/{get_iplayer_cgi,"Run PVR Scheduler","Web PVR Manager"}.command
 	@seticon get_iplayer_uninstall.icns "$(apps_gip)"/"Uninstall get_iplayer".command
 	@mkdir -p "$(apps_gip)"/Help
 	@$(ditto) {get_iplayer,AtomicParsley,FFmpeg,Perl}" Documentation".webloc "$(apps_gip)"/Help

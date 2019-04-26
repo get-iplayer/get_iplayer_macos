@@ -694,7 +694,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/payload/usr/local/bin/get_iplayer.cgi</string>
+													<string>build/payload/usr/local/bin/get_iplayer_cgi</string>
 													<key>PATH_TYPE</key>
 													<integer>3</integer>
 													<key>PERMISSIONS</key>
