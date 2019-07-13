@@ -240,24 +240,22 @@ licenses: $(ulg_licenses)
 $(apps_gip):
 ifndef NOAPPS
 	@mkdir -p "$(apps_gip)"
-	@$(ditto) {get_iplayer,get_iplayer_cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command "$(apps_gip)"
-	@SetFile -a E "$(apps_gip)"/{get_iplayer,get_iplayer_cgi,"Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command
+	@$(ditto) {get_iplayer,get_iplayer_cgi,"Check for Update","Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command "$(apps_gip)"
+	@SetFile -a E "$(apps_gip)"/{get_iplayer,get_iplayer_cgi,"Check for Update","Run PVR Scheduler","Web PVR Manager","Uninstall get_iplayer"}.command
 	@seticon get_iplayer.icns "$(apps_gip)"/get_iplayer.command
 	@seticon get_iplayer_pvr.icns "$(apps_gip)"/{get_iplayer_cgi,"Run PVR Scheduler","Web PVR Manager"}.command
-	@seticon get_iplayer_uninstall.icns "$(apps_gip)"/"Uninstall get_iplayer".command
+	@seticon get_iplayer_uninstall.icns "$(apps_gip)"/{"Check for Update","Uninstall get_iplayer"}.command
 	@mkdir -p "$(apps_gip)"/Help
 	@$(ditto) {get_iplayer,AtomicParsley,FFmpeg,Perl}" Documentation".webloc "$(apps_gip)"/Help
 	@SetFile -a E "$(apps_gip)"/Help/{get_iplayer,AtomicParsley,FFmpeg,Perl}" Documentation".webloc
-	@mkdir -p "$(apps_gip)"/Update
-	@$(ditto) "Check for Update.webloc" "$(apps_gip)"/Update
-	@SetFile -a E "$(apps_gip)"/Update/"Check for Update.webloc"
 	@platypus --app-icon "get_iplayer.icns" --app-version "$(pkg_ver)" --author "get_iplayer"  \
 		--bundle-identifier "com.github.get-iplayer.QuickURLRecord"  --droppable \
 		--interface-type "Progress Bar" --interpreter "/bin/bash" --name "Quick URL Record" \
 		--service --suffixes "webloc" --text-droppable --text-font "Monaco 10" \
 		"Quick URL Record.bash" "$(apps_gip)/Quick URL Record.app"
-	@seticon get_iplayer.icns "$(apps_gip)/Quick URL Record.app"
 	@SetFile -a E "$(apps_gip)/Quick URL Record.app"
+	@seticon get_iplayer.icns "$(apps_gip)/Quick URL Record.app"
+	@$(ditto) "Download get_iplayer".webloc "$(apps_gip)"
 	@echo created $(apps_gip)
 endif
 
