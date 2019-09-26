@@ -1,0 +1,22 @@
+[requires]
+OpenSSL/1.1.1c@conan/stable
+libxml2/2.9.9@bincrafters/stable
+libiconv/1.15@bincrafters/stable
+zlib/1.2.11@conan/stable
+
+[generators]
+make
+pkg_config
+
+[options]
+OpenSSL:shared=True
+libxml2:shared=True
+libiconv:shared=True
+zlib:shared=True
+
+[imports]
+lib, libcrypto.1.1.dylib -> .
+lib, libssl.1.1.dylib -> .
+lib, libxml2.2.dylib -> .
+lib, libiconv.2.dylib -> .
+lib, libz.1.2.11.dylib -> .

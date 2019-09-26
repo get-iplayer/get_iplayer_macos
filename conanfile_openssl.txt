@@ -1,0 +1,8 @@
+[requires]
+OpenSSL/1.1.1c@conan/stable
+
+[options]
+OpenSSL:shared=True
+
+[imports]
+., * -> .

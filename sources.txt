@@ -1,12 +1,34 @@
 AtomicParsley
 =============
-
 https://sourceforge.net/projects/get-iplayer/files/utils/
 https://bitbucket.org/wez/atomicparsley
 
-
 FFmpeg
 ======
-
 https://evermeet.cx/ffmpeg
 https://git.ffmpeg.org/gitweb/ffmpeg.git
+
+OpenSSL
+=======
+https://www.openssl.org
+https://github.com/openssl/openssl
+
+libxml2
+=======
+http://xmlsoft.org
+https://github.com/GNOME/libxml2
+
+libiconv
+========
+https://www.gnu.org/software/libiconv/
+https://savannah.gnu.org/git/?group=libiconv
+
+zlib
+====
+https://zlib.net
+https://github.com/madler/zlib
+
+Relocatable Perl
+================
+https://www.perl.org
+https://github.com/skaji/relocatable-perl
