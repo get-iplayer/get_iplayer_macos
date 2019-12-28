@@ -1,5 +1,5 @@
 # Build macOS installer for get_iplayer
-# Requires: Packages, Xcode CLT, osxiconutils, platypus, unar, Homebrew
+# Requires: Packages, Xcode CLT, osxiconutils, platypus, Homebrew
 # Requires: (default): brew install conan
 # Requires: BREW=1: brew install openssl libxml2 zlib libiconv
 # Build release (VERSION = tag in get_iplayer repo w/o "v" prefix"):
@@ -54,12 +54,14 @@ ssleay_bundle := $(build_pd2l_lib)/site_perl/$(pd2l_ver)/darwin-2level/auto/Net/
 libxml_bundle := $(build_pd2l_lib)/site_perl/$(pd2l_ver)/darwin-2level/auto/XML/LibXML/LibXML.bundle
 gip_files := get_iplayer get_iplayer.cgi
 gip_scripts := get_iplayer,get_iplayer.cgi
-atomicparsley_zip := AtomicParsley-0.9.6-macos-bin.zip
+atomicparsley_ver := 0.9.6
+atomicparsley_zip := AtomicParsley-$(atomicparsley_ver)-macos-bin.zip
 atomicparsley_zip_url := https://sourceforge.net/projects/get-iplayer/files/utils/$(atomicparsley_zip)
 build_atomicparsley_zip := $(build)/$(atomicparsley_zip)
-ffmpeg_7z := ffmpeg-4.2.1.7z
-ffmpeg_7z_url := https://evermeet.cx/pub/ffmpeg/$(ffmpeg_7z)
-build_ffmpeg_7z := $(build)/$(ffmpeg_7z)
+ffmpeg_ver := 4.2.1
+ffmpeg_zip := ffmpeg-$(ffmpeg_ver)-macos64-static.zip
+ffmpeg_zip_url := https://ffmpeg.zeranoe.com/builds/macos64/static/$(ffmpeg_zip)
+build_ffmpeg_zip := $(build)/$(ffmpeg_zip)
 build_licenses := $(build)/licenses
 apps := $(build_payload)/Applications
 apps_gip := $(apps)/get_iplayer
@@ -316,7 +318,7 @@ endif
 $(ulg_pd2l_bin)/get_iplayer: $(ulg_pd2l_bin) $(build_gip_zip)
 ifndef NOGIP
 	@rm -f $(ulg_pd2l_bin)/{$(gip_scripts)}
-	@unar -f -D -q -o $(ulg_pd2l_bin) $(build_gip_zip) $(gip_files)
+	@unzip -j -o -q $(build_gip_zip) $(gip_files) -d $(ulg_pd2l_bin)
 	@sed -E -i.bak -e 's/^(my (\$$version_text|\$$VERSION_TEXT)).*/\1 = "$(pkg_ver)-$$^O";/' \
 		$(ulg_pd2l_bin)/{$(gip_scripts)}
 	@rm -f $(ulg_pd2l_bin)/{$(gip_scripts)}.bak
@@ -339,7 +341,7 @@ endif
 $(ul_man1): $(build_gip_zip)
 ifndef NOGIP
 	@mkdir -p $(ul_man1)
-	@unar -f -D -q -o $(ul_man1) $(build_gip_zip) get_iplayer.1
+	@unzip -j -o -q $(build_gip_zip) get_iplayer.1 -d $(ul_man1)
 	@echo created $(ul_man1)
 endif
 
@@ -366,27 +368,27 @@ endif
 
 $(ulg_bin)/AtomicParsley: $(ulg_bin) $(build_atomicparsley_zip)
 ifndef NOUTILS
-	@unar -f -D -q -o $(ulg_bin) $(build_atomicparsley_zip) AtomicParsley
+	@unzip -j -o -q $(build_atomicparsley_zip) AtomicParsley -d $(ulg_bin)
 	@echo created $(ulg_bin)/AtomicParsley
 endif
 
 atomicparsley: $(ulg_bin)/AtomicParsley
 
-$(build_ffmpeg_7z):
+$(build_ffmpeg_zip):
 ifndef NOUTILS
 	@mkdir -p $(build)
 	@pushd $(build); \
-		if [ ! -f $(ffmpeg_7z) ]; then \
-			echo Downloading $(ffmpeg_7z); \
-			curl -\#fkLO $(ffmpeg_7z_url) || exit 3; \
+		if [ ! -f $(ffmpeg_zip) ]; then \
+			echo Downloading $(ffmpeg_zip); \
+			curl -\#fkLO $(ffmpeg_zip_url) || exit 3; \
 		fi; \
 	popd
-	@echo created $(build_ffmpeg_7z)
+	@echo created $(build_ffmpeg_zip)
 endif
 
-$(ulg_bin)/ffmpeg: $(ulg_bin) $(build_ffmpeg_7z)
+$(ulg_bin)/ffmpeg: $(ulg_bin) $(build_ffmpeg_zip)
 ifndef NOUTILS
-	@unar -f -D -q -o $(ulg_bin) $(build_ffmpeg_7z) ffmpeg
+	@unzip -j -o -q $(build_ffmpeg_zip) ffmpeg-$(ffmpeg_ver)-macos64-static/bin/ffmpeg -d $(ulg_bin)
 	@echo created $(ulg_bin)/ffmpeg
 endif
 
