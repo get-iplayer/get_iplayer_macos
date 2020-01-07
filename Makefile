@@ -388,7 +388,7 @@ endif
 
 $(ulg_bin)/ffmpeg: $(ulg_bin) $(build_ffmpeg_zip)
 ifndef NOUTILS
-	@unzip -j -o -q $(build_ffmpeg_zip) ffmpeg-$(ffmpeg_ver)-macos64-static/bin/ffmpeg -d $(ulg_bin)
+	@unzip -j -o -q $(build_ffmpeg_zip) */bin/ffmpeg -d $(ulg_bin)
 	@echo created $(ulg_bin)/ffmpeg
 endif
 
