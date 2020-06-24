@@ -1,8 +1,11 @@
 [requires]
 OpenSSL/1.1.1c@conan/stable
+zlib/1.2.11@conan/stable
 
 [options]
 OpenSSL:shared=True
+zlib:shared=True
 
 [imports]
-., * -> .
+., * -> . @ root_package=OpenSSL
+lib, libz.1.2.11.dylib -> ./lib @ root_package=zlib

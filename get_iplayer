@@ -1,5 +1,5 @@
 #!/bin/bash
 GIPDIR=/usr/local/get_iplayer
-GIPCLI=$GIPDIR/perl-darwin-2level/bin/get_iplayer
+GIPCLI=$GIPDIR/perl/bin/get_iplayer
 export PATH="$GIPDIR/bin${PATH:+:${PATH}}"
 exec $GIPCLI "$@"

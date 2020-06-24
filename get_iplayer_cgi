@@ -1,6 +1,6 @@
 #!/bin/bash
 GIPDIR=/usr/local/get_iplayer
-GIPCLI=$GIPDIR/perl-darwin-2level/bin/get_iplayer
-GIPWPM=$GIPDIR/perl-darwin-2level/bin/get_iplayer.cgi
+GIPCLI=$GIPDIR/perl/bin/get_iplayer
+GIPWPM=$GIPDIR/perl/bin/get_iplayer.cgi
 export PATH="$GIPDIR/bin${PATH:+:${PATH}}"
 exec $GIPWPM --getiplayer $GIPCLI --listen 127.0.0.1 --port 1935 "$@"
