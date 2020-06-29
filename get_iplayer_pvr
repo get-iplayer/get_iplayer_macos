@@ -1,5 +1,5 @@
 #!/bin/bash
 GIPDIR=/usr/local/get_iplayer
 GIPCLI=$GIPDIR/perl/bin/get_iplayer
-export PATH="$GIPDIR/bin${PATH:+:${PATH}}"
+export PATH="$GIPDIR/utils/bin${PATH:+:${PATH}}"
 exec $GIPCLI --pvr-scheduler 14400 "$@"

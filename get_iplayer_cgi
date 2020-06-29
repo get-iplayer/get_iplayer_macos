@@ -2,5 +2,5 @@
 GIPDIR=/usr/local/get_iplayer
 GIPCLI=$GIPDIR/perl/bin/get_iplayer
 GIPWPM=$GIPDIR/perl/bin/get_iplayer.cgi
-export PATH="$GIPDIR/bin${PATH:+:${PATH}}"
+export PATH="$GIPDIR/utils/bin${PATH:+:${PATH}}"
 exec $GIPWPM --getiplayer $GIPCLI --listen 127.0.0.1 --port 1935 "$@"

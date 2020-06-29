@@ -584,13 +584,15 @@ endif
 
 commit:
 ifndef WIP
+ifneq ($(pkg_ver), $(curr_version))
 	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(pkg_ver)" $(pkg_src)
 	@git commit -m $(pkg_ver) $(pkg_src)
+endif
 	@git tag $(pkg_ver)
 	@git checkout contribute
 	@git merge master
 	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(next_version)" $(pkg_src)
-	@git commit -m "bump dev version" $(pkg_src)
+	@git commit -m $(next_version) $(pkg_src)
 	@git checkout master
 	@echo tagged $(pkg_ver)
 endif
