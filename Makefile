@@ -30,9 +30,9 @@ ifdef TAG
 endif
 pkg_ver := $(VERSION).$(PATCH)
 ifndef WIP
-pkg_tag := $(shell git tag -l $(pkg_ver))
+	pkg_tag := $(shell git tag -l $(pkg_ver))
 ifeq ($(pkg_tag), $(pkg_ver))
-    WIP := 1
+	WIP := 1
 endif
 endif
 build := build
@@ -41,7 +41,7 @@ pkg_name := get_iplayer
 pkg_src := $(pkg_name).pkgproj
 curr_version := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" $(pkg_src))
 ifeq ($(pkg_ver), 0.0.0)
-pkg_ver := $(curr_version)
+	pkg_ver := $(curr_version)
 endif
 next_version := $(shell echo $(pkg_ver) | awk -F. '{print $$1"."$$2"."$$3+1}')
 pkg_out := $(pkg_name).pkg
@@ -91,9 +91,9 @@ atomicparsley_ver := 0.9.7-get_iplayer.1
 atomicparsley_zip := AtomicParsley-$(atomicparsley_ver)-macos-x64.zip
 atomicparsley_zip_url := https://github.com/get-iplayer/atomicparsley/releases/download/$(atomicparsley_ver)/$(atomicparsley_zip)
 build_atomicparsley_zip := $(build)/$(atomicparsley_zip)
-ffmpeg_ver := 4.3
-ffmpeg_zip := ffmpeg-$(ffmpeg_ver)-macos64-static.zip
-ffmpeg_zip_url := https://ffmpeg.zeranoe.com/builds/macos64/static/$(ffmpeg_zip)
+ffmpeg_ver := 4.3.1
+ffmpeg_zip := ffmpeg-$(ffmpeg_ver)-macos64.zip
+ffmpeg_zip_url := https://github.com/ShareX/FFmpeg/releases/download/v$(ffmpeg_ver)/$(ffmpeg_zip)
 build_ffmpeg_zip := $(build)/$(ffmpeg_zip)
 build_licenses := $(build)/licenses
 apps := $(build_payload)/Applications
@@ -259,9 +259,9 @@ endif
 conan: $(build_conan)
 
 ifdef BREW
-$(build_perl_dylib): $(build_brew)
+	$(build_perl_dylib): $(build_brew)
 else
-$(build_perl_dylib): $(build_conan)
+	$(build_perl_dylib): $(build_conan)
 endif
 ifndef NOPERL
 	@mkdir -p $(build_perl_dylib)
@@ -444,6 +444,7 @@ $(ulg_utils_bin)/AtomicParsley: $(build_atomicparsley_zip)
 ifndef NOUTILS
 	@mkdir -p $(ulg_utils_bin)
 	@unzip -j -o -q $(build_atomicparsley_zip) AtomicParsley -d $(ulg_utils_bin)
+	@chmod 755 $(ulg_utils_bin)/AtomicParsley
 	@echo created $(ulg_utils_bin)/AtomicParsley
 	@touch $(ulg_utils_bin)/AtomicParsley
 endif
@@ -465,7 +466,8 @@ endif
 $(ulg_utils_bin)/ffmpeg: $(build_ffmpeg_zip)
 ifndef NOUTILS
 	@mkdir -p $(ulg_utils_bin)
-	@unzip -j -o -q $(build_ffmpeg_zip) */bin/ffmpeg -d $(ulg_utils_bin)
+	@unzip -j -o -q $(build_ffmpeg_zip) ffmpeg -d $(ulg_utils_bin)
+	@chmod 755 $(ulg_utils_bin)/ffmpeg
 	@echo created $(ulg_utils_bin)/ffmpeg
 	@touch $(ulg_utils_bin)/ffmpeg
 endif
@@ -589,12 +591,9 @@ ifneq ($(pkg_ver), $(curr_version))
 	@git commit -m $(pkg_ver) $(pkg_src)
 endif
 	@git tag $(pkg_ver)
-	@git checkout contribute
-	@git merge master
-	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(next_version)" $(pkg_src)
-	@git commit -m $(next_version) $(pkg_src)
-	@git checkout master
 	@echo tagged $(pkg_ver)
+	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(next_version)" $(pkg_src)
+	@git commit -m "bump version" $(pkg_src)
 endif
 
 clean:
