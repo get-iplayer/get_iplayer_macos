@@ -39,11 +39,7 @@ build := build
 build_payload := $(build)/payload
 pkg_name := get_iplayer
 pkg_src := $(pkg_name).pkgproj
-curr_version := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" $(pkg_src))
-ifeq ($(pkg_ver), 0.0.0)
-	pkg_ver := $(curr_version)
-endif
-next_version := $(shell echo $(pkg_ver) | awk -F. '{print $$1"."$$2"."$$3+1}')
+curr_ver := $(shell /usr/libexec/PlistBuddy -c "Print :PACKAGES:0:PACKAGE_SETTINGS:VERSION" $(pkg_src))
 pkg_out := $(pkg_name).pkg
 build_pkg_out := $(build)/$(pkg_out)
 pkg_file := $(pkg_name)-$(pkg_ver)-macos-x64.pkg
@@ -564,7 +560,7 @@ ifndef NOPKG
 	@mkdir -p $(build)
 	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(pkg_ver)" $(pkg_src)
 	@packagesbuild --build-folder "$(PWD)/$(build)" $(pkg_src)
-	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(curr_version)" $(pkg_src)
+	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(curr_ver)" $(pkg_src)
 	@mv -f $(build_pkg_out) $(build_pkg_file)
 	@pushd $(build) > /dev/null; \
 		shasum -a 256 $(pkg_file) > $(pkg_file).sha256 || exit 2; \
@@ -585,15 +581,13 @@ ifndef WIP
 endif
 
 commit:
-ifndef WIP
-ifneq ($(pkg_ver), $(curr_version))
 	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(pkg_ver)" $(pkg_src)
+ifndef WIP
 	@git commit -m $(pkg_ver) $(pkg_src)
-endif
 	@git tag $(pkg_ver)
 	@echo tagged $(pkg_ver)
-	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(next_version)" $(pkg_src)
-	@git commit -m "bump version" $(pkg_src)
+else
+	@/usr/libexec/PlistBuddy -c "Set :PACKAGES:0:PACKAGE_SETTINGS:VERSION $(curr_ver)" $(pkg_src)
 endif
 
 clean:
