@@ -26,7 +26,7 @@
 									<key>GID</key>
 									<integer>80</integer>
 									<key>PATH</key>
-									<string>build/payload/Applications/get_iplayer</string>
+									<string>Applications/get_iplayer</string>
 									<key>PATH_TYPE</key>
 									<integer>3</integer>
 									<key>PERMISSIONS</key>
@@ -678,7 +678,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/payload/usr/local/bin/get_iplayer</string>
+													<string>usr/local/bin/get_iplayer</string>
 													<key>PATH_TYPE</key>
 													<integer>3</integer>
 													<key>PERMISSIONS</key>
@@ -694,7 +694,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/payload/usr/local/bin/get_iplayer_cgi</string>
+													<string>usr/local/bin/get_iplayer_cgi</string>
 													<key>PATH_TYPE</key>
 													<integer>3</integer>
 													<key>PERMISSIONS</key>
@@ -710,7 +710,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/payload/usr/local/bin/get_iplayer_pvr</string>
+													<string>usr/local/bin/get_iplayer_pvr</string>
 													<key>PATH_TYPE</key>
 													<integer>3</integer>
 													<key>PERMISSIONS</key>
@@ -726,7 +726,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/payload/usr/local/bin/get_iplayer_uninstall</string>
+													<string>usr/local/bin/get_iplayer_uninstall</string>
 													<key>PATH_TYPE</key>
 													<integer>3</integer>
 													<key>PERMISSIONS</key>
@@ -742,7 +742,7 @@
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>build/payload/usr/local/bin/get_iplayer_web_pvr</string>
+													<string>usr/local/bin/get_iplayer_web_pvr</string>
 													<key>PATH_TYPE</key>
 													<integer>3</integer>
 													<key>PERMISSIONS</key>
@@ -772,7 +772,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>build/payload/usr/local/get_iplayer</string>
+											<string>usr/local/get_iplayer</string>
 											<key>PATH_TYPE</key>
 											<integer>3</integer>
 											<key>PERMISSIONS</key>
@@ -788,7 +788,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>build/payload/usr/local/share</string>
+											<string>usr/local/share</string>
 											<key>PATH_TYPE</key>
 											<integer>3</integer>
 											<key>PERMISSIONS</key>
@@ -895,7 +895,7 @@
 				<key>PREINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>build/payload/usr/local/bin/get_iplayer_uninstall</string>
+					<string>usr/local/bin/get_iplayer_uninstall</string>
 					<key>PATH_TYPE</key>
 					<integer>3</integer>
 				</dict>
@@ -1065,7 +1065,7 @@
 							<key>PATH</key>
 							<string>introduction.rtfd</string>
 							<key>PATH_TYPE</key>
-							<integer>3</integer>
+							<integer>1</integer>
 						</dict>
 					</dict>
 				</array>
@@ -1082,7 +1082,7 @@
 							<key>PATH</key>
 							<string>license.rtf</string>
 							<key>PATH_TYPE</key>
-							<integer>3</integer>
+							<integer>1</integer>
 						</dict>
 					</dict>
 				</array>
@@ -1106,7 +1106,7 @@
 							<key>PATH</key>
 							<string>summary.rtfd</string>
 							<key>PATH_TYPE</key>
-							<integer>3</integer>
+							<integer>1</integer>
 						</dict>
 					</dict>
 				</array>
@@ -1173,7 +1173,7 @@
 				<key>PATH</key>
 				<string>build</string>
 				<key>PATH_TYPE</key>
-				<integer>3</integer>
+				<integer>1</integer>
 			</dict>
 			<key>EXCLUDED_FILES</key>
 			<array>
@@ -1347,6 +1347,8 @@
 			<string>get_iplayer</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
+			<key>REFERENCE_FOLDER_PATH</key>
+			<string>build/src</string>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
 			<false/>
 		</dict>

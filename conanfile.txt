@@ -1,0 +1,22 @@
+[requires]
+openssl/3.0.7
+libxml2/2.10.3
+libiconv/1.17
+zlib/1.2.13
+
+[generators]
+make
+
+[options]
+openssl:shared=True
+libxml2:shared=True
+libiconv:shared=True
+zlib:shared=True
+
+[imports]
+lib, libcrypto.3.dylib -> ./dylib @ root_package=openssl
+lib, libssl.3.dylib -> ./dylib @ root_package=openssl
+lib, libxml2.2.dylib -> ./dylib @ root_package=libxml2
+lib, libiconv.2.dylib -> ./dylib @ root_package=libiconv
+lib, libcharset.1.dylib -> ./dylib @ root_package=libiconv
+lib, libz.1.2.13.dylib -> ./dylib @ root_package=zlib

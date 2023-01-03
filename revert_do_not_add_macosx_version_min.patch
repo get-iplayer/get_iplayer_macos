@@ -1,0 +1,38 @@
+From 4867ee529efe2eee83dad1513f13b60c60a0f68f Mon Sep 17 00:00:00 2001
+From: dinkypumpkin <dinkypumpkin@gmail.com>
+Date: Sun, 18 Dec 2022 23:29:36 +0000
+Subject: [PATCH] Revert "do not add macosx_version_min"
+
+---
+ build/relocatable-perl-build | 15 ---------------
+ 1 file changed, 15 deletions(-)
+
+diff --git a/build/relocatable-perl-build b/build/relocatable-perl-build
+index f2f2afc..c2a5cba 100644
+--- a/build/relocatable-perl-build
++++ b/build/relocatable-perl-build
+@@ -156,21 +156,6 @@ sub perl_build {
+     say "---> patching by $devel " . $devel->VERSION;
+     $devel->patch_source($perl_version, ".");
+     if ($^O eq "darwin") {
+-        {
+-            say "---> patching, do not add macosx_version_min";
+-            my $file = "hints/darwin.sh";
+-            open my $in, "<", $file or die;
+-            open my $out, ">", "$file.tmp" or die;
+-            while (my $line = <$in>) {
+-                print {$out} $line;
+-                if ($line =~ m{^ \s* add_macosx_version_min \s* \( }x) {
+-                    print {$out} "  return\n";
+-                }
+-            }
+-            close $in;
+-            close $out;
+-            rename "$file.tmp", $file or die;
+-        }
+         if (version->parse($perl_version) <= v5.34.1) {
+             my $klass = "Devel::PatchPerl::Plugin::FixCompoundTokenSplitByMacro";
+             say "---> patching by $klass";
+-- 
+2.31.0
+

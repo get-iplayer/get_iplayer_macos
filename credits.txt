@@ -10,12 +10,15 @@ https://github.com/skaji/relocatable-perl
 
 AtomicParsley
 =============
+http://atomicparsley.sourceforge.net
 https://github.com/get-iplayer/atomicparsley
 
 FFmpeg
 ======
-https://ffmpeg.zeranoe.com
+https://ffmpeg.org
 https://git.ffmpeg.org/gitweb/ffmpeg
+https://evermeet.cx/pub/ffmpeg/
+https://github.com/eugeneware/ffmpeg-static
 
 OpenSSL
 =======
@@ -36,3 +39,8 @@ zlib
 ====
 https://zlib.net
 https://github.com/madler/zlib
+
+OpenSSL/libxml2/libiconv/zlib
+=============================
+built with Conan
+https://conan.io
