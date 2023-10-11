@@ -119,18 +119,18 @@ gip_perl_scripts := get_iplayer,get_iplayer.cgi
 gip_bin_files := get_iplayer get_iplayer_cgi get_iplayer_pvr get_iplayer_uninstall get_iplayer_web_pvr
 gip_bin_scripts := get_iplayer,get_iplayer_cgi,get_iplayer_pvr,get_iplayer_uninstall,get_iplayer_web_pvr
 # atomicparsley
-ap_ver := 0.9.7-get_iplayer.3
+ap_ver := 0.9.7-get_iplayer.4
 ap_base := AtomicParsley-$(ap_ver)-macos-$(macos_arch)
 ap_zip_file := AtomicParsley-$(ap_ver)-macos-$(macos_arch)-shared.zip
 ap_zip_path := $(build)/$(ap_zip_file)
 ap_zip_url := https://github.com/get-iplayer/atomicparsley/releases/download/$(ap_ver)/$(ap_zip_file)
 # ffmpeg
-ff_ver := 5.0.1
+ff_ver := 6.0
 ff_arch := x64
-ff_base := darwin-$(ff_arch)
-ff_zip_file := ffmpeg-$(ff_ver)-$(ff_base).gz
+ff_base := ffmpeg-$(ff_ver)-darwin-$(ff_arch)
+ff_zip_file := $(ff_base).gz
 ff_zip_path := $(build)/$(ff_zip_file)
-ff_zip_url := https://github.com/eugeneware/ffmpeg-static/releases/download/b$(ff_ver)/$(ff_base).gz
+ff_zip_url := https://github.com/eugeneware/ffmpeg-static/releases/download/b$(ff_ver)/ffmpeg-darwin-$(ff_arch).gz
 # licences
 lic_dir := $(build)/licenses
 # applications
