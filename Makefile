@@ -418,7 +418,7 @@ endif
 
 $(ulg_perl_bin)/get_iplayer.cgi: $(ulg_perl_bin)/get_iplayer
 
-$(ulg)/credits.txt:
+$(ulg)/credits.txt: credits.txt
 ifndef NOGIP
 	@mkdir -p $(ulg)
 	@$(ditto) credits.txt $(ulg)
@@ -426,7 +426,7 @@ ifndef NOGIP
 	@touch $(ulg)/credits.txt
 endif
 
-$(ul_man1):
+$(ul_man1)/get_iplayer.1: $(gip_tgz)
 ifndef NOGIP
 	@mkdir -p $(ul_man1)
 	@tar -xzf $(gip_tgz) -C $(ul_man1) get_iplayer.1
@@ -442,7 +442,7 @@ ifndef NOGIP
 	@touch $(ul_bin)
 endif
 
-gip-all: $(ulg_perl_bin) $(ulg_perl_bin)/get_iplayer $(ulg_perl_bin)/get_iplayer.cgi $(ulg)/credits.txt $(ul_man1) $(ul_bin)
+gip-all: $(ulg_perl_bin) $(ulg_perl_bin)/get_iplayer $(ulg_perl_bin)/get_iplayer.cgi $(ulg)/credits.txt $(ul_man1)/get_iplayer.1 $(ul_bin)
 
 gip-clean:
 	@rm -f $(ul_bin)/{$(gip_bin_scripts)}
@@ -580,7 +580,7 @@ deps-all: perl-all gip-all ap-all ff-all lic-all apps-all
 
 deps-clean: perl-clean gip-clean ap-clean ff-clean lic-clean apps-clean
 
-$(pkg_path): $(pkg_prj) $(ulg_perl) $(ulg_perl_bin)/get_iplayer $(ulg_perl_bin)/get_iplayer.cgi $(ulg)/credits.txt $(ul_man1) $(ul_bin) $(ulg_utils_bin)/AtomicParsley $(ulg_utils_bin)/ffmpeg $(ulg_lic_dir) $(apps_gip)
+$(pkg_path): $(pkg_prj) $(ulg_perl) $(ulg_perl_bin)/get_iplayer $(ulg_perl_bin)/get_iplayer.cgi $(ulg)/credits.txt $(ul_man1)/get_iplayer.1 $(ul_bin) $(ulg_utils_bin)/AtomicParsley $(ulg_utils_bin)/ffmpeg $(ulg_lic_dir) $(apps_gip)
 ifndef NOPKG
 	@echo building $(pkg_path)
 	@mkdir -p $(dir $(pkg_path))
