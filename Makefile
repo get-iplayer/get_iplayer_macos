@@ -306,6 +306,7 @@ ifndef NOPERL
 	$(eval $(shell if test -z "$(CONAN_LIB_DIRS_OPENSSL)"; then echo include $(conan_install)/conanbuildinfo.mak; fi))
 	@mkdir -p $(pg_dylib)
 	@$(ditto) $(conan_dylib)/*.dylib $(pg_dylib)
+	@mv -f $(pg_dylib)/$(libz) $(pg_dylib)/$(sys_libz)
 	@chmod +w $(pg_dylib)/*.dylib
 	@install_name_tool \
 		-id @rpath/$(libcrypto ) \
